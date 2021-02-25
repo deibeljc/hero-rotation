@@ -337,12 +337,12 @@ local function combustion_phase()
     local ShouldReturn = combustion_cooldowns(); if ShouldReturn then return ShouldReturn; end
   end
 
+  if Player:BuffUp(S.Combustion) and HR.AoEON() and EnemiesCount8ySplash >= 2 and Player:BuffUp(S.HotStreakBuff) then
+    if HR.Cast(S.Flamestrike, nil, nil, not Target:IsSpellInRange(S.Flamestrike)) then return "flamestrike combustion_phase 17"; end
+  end
+
   if Player:BuffUp(S.Combustion) and Player:BuffUp(S.HotStreakBuff) then
     if HR.Cast(S.Pyroblast, nil, nil, not Target:IsSpellInRange(S.Pyroblast)) then return "pyroblast combustion_phase 16"; end
-  end
-  
-  if Player:BuffUp(S.Combustion) and HR.AoEON() and EnemiesCount10ySplash >= var_hot_streak_flamestrike and Player:BuffUp(S.HotStreakBuff) then
-    if HR.Cast(S.Flamestrike, nil, nil, not Target:IsSpellInRange(S.Flamestrike)) then return "flamestrike standard_rotation 1"; end
   end
 
   if Player:BuffUp(S.Combustion) and S.PhoenixFlames:IsCastable() and S.PhoenixFlames:Charges() > S.FireBlast:Charges() then
@@ -350,15 +350,15 @@ local function combustion_phase()
   end
 
   if Player:BuffUp(S.Combustion) and S.FireBlast:IsCastable() and S.FireBlast:Charges() >= S.PhoenixFlames:Charges() and Player:BuffDown(S.HotStreakBuff) and not Player:PrevGCD(1, S.PhoenixFlames) then
-    if HR.CastLeft(S.FireBlast, nil, nil, not Target:IsSpellInRange(S.FireBlast)) then return "fire_blast combustion_phase 17"; end;
+    if HR.CastLeft(S.FireBlast, nil, nil, not Target:IsSpellInRange(S.FireBlast)) then return "fire_blast combustion_phase 19"; end;
+  end
+
+  if Player:BuffUp(S.Combustion) and S.Flamestrike:IsCastable() and HR.AoEON() and EnemiesCount8ySplash >= 2 and S.FireBlast:Charges() > 0 then
+    if HR.Cast(S.Flamestrike, nil, nil, not Target:IsSpellInRange(S.Flamestrike)) then return "flamestrike combustion_phase 21"; end
   end
 
   if Player:BuffUp(S.Combustion) and S.FireBlast:IsCastable() and S.FireBlast:Charges() > 0 then
-    if HR.Cast(S.Pyroblast, nil, nil, not Target:IsSpellInRange(S.Pyroblast)) then return "pyroblast combustion_phase 18"; end
-  end
-  
-  if Player:BuffUp(S.Combustion) and S.Flamestrike:IsCastable() and HR.AoEON() and not S.PhoenixFlames:InFlight() and EnemiesCount10ySplash >= var_hot_streak_flamestrike and S.FireBlast:Charges() > 0 then
-    if HR.Cast(S.Flamestrike, nil, nil, not Target:IsSpellInRange(S.Flamestrike)) then return "flamestrike standard_rotation 1"; end
+    if HR.Cast(S.Pyroblast, nil, nil, not Target:IsSpellInRange(S.Pyroblast)) then return "pyroblast combustion_phase 20"; end
   end
 
   --fireball,if=buff.combustion.down&cooldown.combustion.remains<cast_time&!conduit.flame_accretion
